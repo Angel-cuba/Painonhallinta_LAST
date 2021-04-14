@@ -1,0 +1,4 @@
+# Tässä tiedostossa on painoindeksitietoja
+Etunimi;Sukunimi;Pituus;Paino
+Mika;Vainio;171;72
+Mikko;Viljanen;176;82
