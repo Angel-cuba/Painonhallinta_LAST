@@ -78,7 +78,7 @@ def sql_string(kentta):
     return kentta
 
 
-# TODO: luo rutiini mittaustitojen syöttämiseksi mittaukset tauluun
+# TODO: Rutiini mittaustitojen syöttämiseksi mittaukset tauluun
 def lissa_mittaus(tiedosto, henkilo_id, pituus, paino):
     """Lisää henkilön mittaustiedot mittaus-tauluun
 
@@ -89,8 +89,6 @@ def lissa_mittaus(tiedosto, henkilo_id, pituus, paino):
     """
 
     sql_lause = "INSERT INTO mittaus (henkilo_id, pituus, paino) VALUES (" + str(henkilo_id) + "," + str(pituus) + "," + str(paino) + ")"
-
-# TODO: luo rutiini tietojen lukemiseksi molemmista tauluita
 
     # Luodaan yhteys tietokantaan
     yhteys = sqlite3.connect(tiedosto)
@@ -104,10 +102,40 @@ def lissa_mittaus(tiedosto, henkilo_id, pituus, paino):
     # Suljetaan yheys
     yhteys.close()
 
+# TODO: luo rutiini tietojen lukemiseksi molemmista tauluita
+def lue_kaikki(tiedosto, taulu):
+    """[summary]
+
+    Args:
+        tiedosto (string): tietokantatiedoston nimi
+        taulu (string): taulun nimi
+
+    Returns:
+        list: tulosjoukon
+    """
+    lista =[]
+    sql_lause = "SELECT * FROM " + taulu + ";"
+
+    # Luodaan yhteys tietokantaan
+    yhteys = sqlite3.connect(tiedosto)
+
+    # Suoritetaan tietueen lisäys SQL-lauseena
+    tulosjoukko = yhteys.execute(sql_lause)
+    for rivi in tulosjoukko:
+        lista.append(rivi)
+
+    # Vahvistetaan tapahtuma (transaktio)
+    yhteys.commit()
+    
+    # Suljetaan yheys
+    yhteys.close()
+    return lista
+    
+
 # Paikallinen testaus
 if __name__ == "__main__":
-    luo_tietokanta(tietokannan_nimi)
-    luo_taulut(tietokannan_nimi)
+    # luo_tietokanta(tietokannan_nimi)
+    # luo_taulut(tietokannan_nimi)
 
     """ etunimi = 'Mikko'
     sukunimi = 'Viljanen'
@@ -116,8 +144,8 @@ if __name__ == "__main__":
     sql_lause = "INSERT INTO henkilo (etunimi, sukunimi, sukupuoli, spaiva) VALUES (" + "'" + etunimi + "', " + "'" + sukunimi + "', " + str(sukupuoli) + ", " + "'" + spaiva + "');"
     print(sql_lause) """
 
-    lisaa_henkilo(tietokannan_nimi, 'Mikko', 'Viljanen', 1, '1968-12-03')
-    lisaa_henkilo(tietokannan_nimi, 'Mika', 'Vainio', 1, '1962-06-26')
+    # lisaa_henkilo(tietokannan_nimi, 'Mikko', 'Viljanen', 1, '1968-12-03')
+    # lisaa_henkilo(tietokannan_nimi, 'Mika', 'Vainio', 1, '1962-06-26')
 
 
     """  
@@ -128,4 +156,9 @@ if __name__ == "__main__":
     print(sql_lause) 
     """
 
-    lissa_mittaus(tietokannan_nimi, 2, 171, 74)
+    # lissa_mittaus(tietokannan_nimi, 2, 171, 74)
+
+    tulosjoukko = lue_kaikki(tietokannan_nimi, 'henkilo')
+    print(tulosjoukko)
+
+    tulosjoukko2 = lue_kaikki(tietokannan_nimi, 'henkilot_ja_mittauskset')
