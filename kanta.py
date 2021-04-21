@@ -160,5 +160,6 @@ if __name__ == "__main__":
 
     tulosjoukko = lue_kaikki(tietokannan_nimi, 'henkilo')
     print(tulosjoukko)
-
+    #BUG: ei löydä näkymää, selvitä, mikä mättää 
     tulosjoukko2 = lue_kaikki(tietokannan_nimi, 'henkilot_ja_mittauskset')
+    print(tulosjoukko2)
