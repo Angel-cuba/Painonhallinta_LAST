@@ -95,7 +95,7 @@ def lisaa_mittaus(tiedosto, henkilo_id, pituus, paino):
     # Suljetaan yheys
     yhteys.close()
 
-# TODO: luo rutiini tietojen lukemiseksi molemmista tauluita
+# Rutiini kaikkien tietojen lukemiseksi taulusta tai näkymästä
 def lue_kaikki(tiedosto, taulu):
     """[summary]
     Args:
@@ -110,16 +110,43 @@ def lue_kaikki(tiedosto, taulu):
      # Luodaan yhteys tietokantaan
     yhteys = sqlite3.connect(tiedosto)
 
-    # Suoritetaan tietueen lisäys SQL-lauseena
+    # Suoritetaan tietueen lisäys listaan SQL-lauseena
     tulosjoukko = yhteys.execute(sql_lause)
     for rivi in tulosjoukko:
         lista.append(rivi)
     
-    # Suljetaan yheys
+    # Suljetaan yhteys
     yhteys.close()
 
     return lista   
 
+# Haetaan henkilön id:n perusteella hänen viimeisimmät tietonsa
+# Rutiini kaikkien tietojen lukemiseksi taulusta tai näkymästä
+def lue_viimeiset_tiedot(tiedosto, henkilo_id):
+    """Luetaan henkilön tiedot näkymästä henkilon_viimeiset_tiedot
+       käyttämällä ehtonan henkilo_id-mumeroa
+    Args:
+        tiedosto (string): tietokantatiedoston nimi
+        taulu (string): taulun nimi
+        henkilo_id (integer): henkilön id 
+    Returns:
+        list: tulosjoukon tietueet
+    """
+    lista = []
+    sql_lause = "SELECT * FROM henkilon_viimeiset_tiedot WHERE henkilo_id = " + str(henkilo_id) + ";"
+
+     # Luodaan yhteys tietokantaan
+    yhteys = sqlite3.connect(tiedosto)
+
+    # Suoritetaan tietueen lisäys listaan SQL-lauseena
+    tulosjoukko = yhteys.execute(sql_lause)
+    for rivi in tulosjoukko:
+        lista.append(rivi)
+    
+    # Suljetaan yhteys
+    yhteys.close()
+
+    return lista   
 # Paikallinen testaus
 if __name__ == "__main__":
     # luo_tietokanta(tietokannan_nimi)
@@ -145,8 +172,9 @@ if __name__ == "__main__":
 
     # lisaa_mittaus(tietokannan_nimi, 2, 171, 74)
 
-    tulosjoukko = lue_kaikki(tietokannan_nimi, 'henkilo')
-    print(tulosjoukko)
-    # Näkymän testaus: näkymä tehty GUI:ssa, muista tallentaa ja sulkea ennen testaamista!
-    tulosjoukko2 = lue_kaikki(tietokannan_nimi, 'henkilon_mittaukset')
-    print(tulosjoukko2)
+    # tulosjoukko = lue_kaikki(tietokannan_nimi, 'henkilo')
+    # print(tulosjoukko)
+    
+    # Testatan näkymän henkilon_viimeiset_tiedot toimintaa
+    henkilon_tiedot = lue_viimeiset_tiedot(tietokannan_nimi, 2)
+    print(henkilon_tiedot)
