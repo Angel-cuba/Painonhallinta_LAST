@@ -174,6 +174,8 @@ if __name__ == "__main__":
 
     # tulosjoukko = lue_kaikki(tietokannan_nimi, 'henkilo')
     # print(tulosjoukko)
+    # Testataan henkilön lisäystä
+    lisaa_henkilo(tietokannan_nimi, 'Uolevi', 'Usvakumpu', 1, '1985-10-30')
     
     # Testatan näkymän henkilon_viimeiset_tiedot toimintaa
     henkilon_tiedot = lue_viimeiset_tiedot(tietokannan_nimi, 2)
