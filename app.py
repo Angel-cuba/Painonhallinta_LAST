@@ -21,7 +21,9 @@ while True:
         # Kysytään henkilötiedot
         etunimi = input('etunimi: ')
         sukunimi = input('sukunimi: ')
-        sukupuoli = kysymys.kysy_liukuluku('Sukupuoli nainen 0, mies 1: ', 0, 1)
+        # sukupuoli = kysymys.kysy_liukuluku('Sukupuoli nainen 0, mies 1: ', 0, 1)
+
+        sukupuoli = int(input('Sukupuoli 1 mies, 0 nainen: '))
         syntyma_aika = input('Syntymäaika (VVVV-KK-PP): ') 
 
         # Lisätään henkilö tietokantaan
